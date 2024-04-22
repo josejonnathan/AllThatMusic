@@ -1,6 +1,7 @@
 from django.db import models
 
 
+
 class Artist(models.Model):
     """
     Model to store information about music artists.

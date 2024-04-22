@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from .views import HomePageView, DeezerRequestView, ArtistListView, ArtistDetailView, AlbumListView, AlbumDetailView, SongListView, SongDetailView, ArtistUpdateView, SongUpdateView
 
 urlpatterns = [
