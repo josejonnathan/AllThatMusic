@@ -1,0 +1,54 @@
+{% extends "base.html" %}{% load static %} {% block content %}
+<div class="container">
+  <div class="d-flex justify-content-center">
+    <div class="row justify-content-center">
+      <div class="col-8 ">
+        <div class="card bg-warning text-dark p-4 m-4">
+          <img
+            src="https://cdn-assets-eu.frontify.com/s3/frontify-enterprise-files-eu/eyJwYXRoIjoiZGVlemVyXC9maWxlXC8zVDM3ZVFVOTZzZW1iTTZEQjZXNy5wbmcifQ:deezer:-256q9cZ__TTHp2xtHd4kKoE7MOVxWwSaIzf24seFxM?width={width}"
+            class="card-img-top mb-3"
+            alt="Deezer Logo"
+          />
+          <h5 class="text-center">Create Post from Deezer</h5>
+          {% if error_message %}
+          <p>{{ error_message }}</p>
+          {% else %}
+          <div class="mb-3">
+            <form action="{% url 'create_from_deezer' %}" method="GET">
+              <div class="text-center">
+                <label class="form-label mt-2" for="album_id"
+                  >Deezer Album ID:</label
+                >
+              </div>
+  
+              <input
+                class="form-control bg-dark text-light mt-2"
+                type="text"
+                id="album_id"
+                name="album_id"
+                required
+              />
+              <div class="text-center">
+                <button class="btn btn-dark mt-4" type="submit">
+                  Create Post
+                </button>
+              </div>
+            </form>
+            {% if album %}
+          </div>
+          <div class="text-center">
+            <h5>Retrieved Album Information</h5>
+            <p>Title: {{ album.title }}</p>
+            <p>Artist: {{ album.artist }}</p>
+            <p>Year: {{ album.year }}</p>
+          </div>
+  
+          {% endif %} {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% endblock content %}

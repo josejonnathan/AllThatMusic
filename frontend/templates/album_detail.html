@@ -1,0 +1,63 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+<div class="container py-4">
+  <div class="row">
+    <div class="col-6">
+      <h1 class="text-center">{{ album.title }}</h1>
+      <div class="text-center">
+        <img
+          class="img p-3"
+          src="{{ album.cover_url }}"
+          alt="{{ album.title }} Photo"
+        />
+      </div>
+      <div class="text-center">Listen now on: </div>
+
+      <div class="d-flex justify-content-around p-3">
+        <a href="{{ album.deezer_album_link }}"
+          ><img
+            src="{% static 'Deezer_link.png' %}"
+            style="height: 5vh"
+            alt="Deezer"
+        /></a>
+      </div>
+      <div class="text-center">
+        <p></p>
+          <strong>Artist: </strong
+          ><a class="link-light text-decoration-none" href="{{ artist_detail_url }}">{{ album.artist }}</a>
+        </p>
+        <p><strong>Year:</strong> {{ album.year }}</p>
+      </div>
+    </div>
+
+    <div class="col-1"></div>
+
+    <div class="col-4">
+      <div class="row">
+        <div class="col">
+          <table class="table table-dark">
+            <thead>
+              <tr>
+                <th><h3>Tracklist</h3></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for song in songs %}
+              <tr>
+                <td>
+                  <a
+                    class="link-light text-decoration-none"
+                    href="{% url 'song_detail' song.pk %}"
+                    >{{ song.song }}</a
+                  >
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
