@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'api.apps.ApiConfig',
     'frontend.apps.FrontendConfig',
+    'users.apps.UsersConfig',
     'django.contrib.postgres',
     'crispy_forms',
     'crispy_bootstrap4',
