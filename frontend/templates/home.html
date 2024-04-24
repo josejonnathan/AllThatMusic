@@ -3,18 +3,18 @@
 <div class="container">
   <div class="row my-5">
     <div class="col-7">
-      <h1 class="text-center">All That Music</h1>
+      <h1 class="text-center text-warning">All That Music</h1>
       <p>
         Welcome to All That Music, is a web application designed for music lovers who want to organize and explore their collection of albums, artists, and songs in an easy and efficient way. The application allows users to create and manage artist profiles, albums, and songs, as well as discover new music through integrations with streaming platforms and lyrics services.
       </p>
-      <h3>Key Features</h3>
+      <h3 class="text-center text-warning">Key Features</h3>
       <ul>
         <li><strong>Artist Management:</strong> Users can create artist profiles and add detailed information such as biographies, social media links, and photos.</li>
         <li><strong>Album and Song Exploration:</strong> The application allows users to browse through their collection of albums and songs, as well as search for and discover new releases.</li>
         <li><strong>Integration with Streaming Platforms:</strong> Record Collection integrates with streaming services like Deezer to provide up-to-date information about albums and songs, as well as direct access to the music.</li>
         <li><strong>Lyrics Management:</strong> Users can add song lyrics to their favorite tracks, enabling quick access to the lyrics while listening to music.</li>
       </ul>
-      <h3 class="text-center">Today's Pickup</h3>
+      <h3 class="text-center text-warning">Today's Pickup</h3>
       <div class="row row-cols-1 row-cols-md-3 row-cols-lg-3 g-4">
         {% for album in random_albums %}
         <div class="col">

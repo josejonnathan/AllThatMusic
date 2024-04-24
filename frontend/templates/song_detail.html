@@ -4,7 +4,7 @@
     <div class="col-2"></div>
     <div class="col-4 text-center">
       {% if song.lyrics %}
-      <h1>{{ song.song }}</h1>
+      <h1 class="text-warning">{{ song.song }}</h1>
       <p>{{ song.lyrics | linebreaks }}</p>
       {% else %}
       <h1>{{ song.song }}</h1>
