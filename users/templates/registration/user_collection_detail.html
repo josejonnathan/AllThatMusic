@@ -1,0 +1,28 @@
+<!-- user_collection_detail.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+  <h2>{{ object.user.username }}'s Collection</h2>
+  <h3>Albums</h3>
+  <ul>
+    {% for album in object.albums.all() %}
+    <li>{{ album.title }}</li>
+    {% endfor %}
+  </ul>
+
+  <h3>Songs</h3>
+  <ul>
+    {% for song in object.songs.all() %}
+    <li>{{ song.title }}</li>
+    {% endfor %}
+  </ul>
+
+  <h3>Artists</h3>
+  <ul>
+    {% for artist in object.artists.all() %}
+    <li>{{ artist.name }}</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

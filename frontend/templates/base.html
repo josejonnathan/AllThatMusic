@@ -21,6 +21,14 @@
   <body class="bg-dark text-white" style="padding-top: 60px">
     {% include "navbar.html" %} {% block content %} {% endblock content %}
     
+    <div class="container text-center">
+      {% if user.is_authenticated %}
+        Welcome, {{ user.username }} | <a class="text-light" href="{% url 'logout' %}">Logout</a>
+      {% else %}
+        <a class="text-light" href="{% url 'login' %}">Login</a> | <a class="text-light" href="{% url 'register' %}">Signup</a>
+      {% endif %}
+    </div>
+
     <footer class="footer">
       <div class="container p-3">
         <div class="row" style=>
