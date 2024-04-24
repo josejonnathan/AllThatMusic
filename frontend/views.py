@@ -82,9 +82,10 @@ class HomePageView(TemplateView):
 
 class ArtistListView(ListView):
     model = Artist
-    template_name = 'artist_list.html'  # Template for rendering the list
-    context_object_name = 'artists'  # Name of the context variable in the template
+    template_name = 'artist_list.html'
+    context_object_name = 'artists'
     ordering = ['name']
+    paginate_by = 24  
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -94,6 +95,7 @@ class ArtistListView(ListView):
         context['artists_by_album_count'] = artists_by_album_count
 
         return context
+
 
 
 class ArtistDetailView(DetailView):
@@ -111,14 +113,14 @@ class ArtistDetailView(DetailView):
 
 class AlbumListView(ListView):
     model = Album
-    template_name = 'album_list.html'  # Template for rendering the list
-    context_object_name = 'albums'  # Name of the context variable in the template
-    ordering = ['title']
+    template_name = 'album_list.html'
+    context_object_name = 'albums'
+    ordering = ['title']  
+    paginate_by = 24  
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        # Obtener la lista de álbumes ordenados por año
         albums_by_year = Album.objects.annotate(
             num_years=Count('year')).order_by('-year')
         context['albums_by_year'] = albums_by_year
@@ -134,7 +136,6 @@ class AlbumDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         album = self.object
-        # Obtener todas las canciones del álbum
         context['songs'] = album.song_set.all()
         context['artist_detail_url'] = reverse(
             'artist_detail', kwargs={'pk': album.artist.pk})
@@ -146,13 +147,13 @@ class SongListView(ListView):
     template_name = 'song_list.html'
     context_object_name = 'songs'
     ordering = ['song']
-    paginate_by = 20  # Specify the number of songs per page
+    paginate_by = 20  
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         artist_list = context[self.context_object_name]
         artists_with_most_songs = Artist.objects.annotate(
-            num_songs=Count('song')).order_by('-num_songs')[:15]  # Obtener los primeros 5 artistas
+            num_songs=Count('song')).order_by('-num_songs')[:15]  
         context['artists_with_most_songs'] = artists_with_most_songs
         paginator = Paginator(artist_list, self.paginate_by)
         page_number = self.request.GET.get('page')
@@ -171,10 +172,8 @@ class SongDetailView(DetailView):
         song = self.object
         album_cover_url = song.album.cover_url
         artist_photo_url = song.artist.photo_url
-        # Agregar el enlace al ArtistDetailView relacionado
         context['artist_detail_url'] = reverse(
             'artist_detail', kwargs={'pk': song.artist.pk})
-        # Agregar el enlace al AlbumDetailView relacionado
         context['album_detail_url'] = reverse(
             'album_detail', kwargs={'pk': song.album.pk})
         context['album_cover_url'] = album_cover_url
@@ -186,7 +185,9 @@ class ArtistUpdateView(UpdateView):
     model = Artist
     fields = ['review', 'instagram_link', 'youtube_link']
     template_name = 'artist_update.html'
-    success_url = reverse_lazy('artist_list')
+    
+    def get_success_url(self):
+        return reverse('artist_detail', kwargs={'pk': self.object.pk})
 
 
 class SongUpdateView(UpdateView):
@@ -194,3 +195,6 @@ class SongUpdateView(UpdateView):
     fields = ['lyrics', 'youtube_link']
     template_name = 'song_update.html'
     success_url = reverse_lazy('song_list')
+    
+    def get_success_url(self):
+        return reverse('song_detail', kwargs={'pk': self.object.pk})
