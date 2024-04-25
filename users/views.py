@@ -24,22 +24,47 @@ class UserLoginView(LoginView):
 class UserLogoutView(LogoutView):
     next_page = reverse_lazy('home')
     
-def get_user_collection(request):
-    collection = get_object_or_404(UserCollection, user=request.user)
-    return collection
-
-
-@method_decorator(login_required, name='dispatch')
-class UserCollectionDetailView(DetailView):
-    model = UserCollection
-    template_name = 'user_collection_detail.html'
+# Collection creation
     
 @receiver(post_save, sender=User)
 def create_user_collection(sender, instance, created, **kwargs):
     if created:
         UserCollection.objects.create(user=instance)
+        
+@method_decorator(login_required, name='dispatch')
+class UserCollectionDetailView(DetailView):
+    model = UserCollection
+    template_name = 'user_collection_detail.html'
+    
+@method_decorator(login_required, name='dispatch')
+class UserCollectionArtistView(DetailView):
+    model = UserCollection
+    template_name = 'user_collection/artist_list.html'
+    
+    def get_object(self):
+        return get_object_or_404(UserCollection, user=self.request.user)
+    
+@method_decorator(login_required, name='dispatch')
+class UserCollectionAlbumView(DetailView):
+    model = UserCollection
+    template_name = 'user_collection/album_list.html'
+    
+    def get_object(self):
+        return get_object_or_404(UserCollection, user=self.request.user)
+    
+@method_decorator(login_required, name='dispatch')
+class UserCollectionSongView(DetailView):
+    model = UserCollection
+    template_name = 'user_collection/song_list.html'
+    
+    def get_object(self):
+        return get_object_or_404(UserCollection, user=self.request.user)
 
 # Collection Handling 
+
+def get_user_collection(request):
+    collection = get_object_or_404(UserCollection, user=request.user)
+    return collection
 
 @require_POST
 @login_required
@@ -47,6 +72,8 @@ def add_album_to_collection(request, album_id):
     album = get_object_or_404(Album, id=album_id)
     collection, _ = UserCollection.objects.get_or_create(user=request.user)
     collection.albums.add(album)
+    if album.artist:
+        collection.artists.add(album.artist)
 
     return redirect('user_collection_detail', collection.pk)
 
@@ -66,6 +93,10 @@ def add_song_to_collection(request, song_id):
     song = get_object_or_404(Song, id=song_id)
     collection, _ = UserCollection.objects.get_or_create(user=request.user)
     collection.songs.add(song)
+    if song.album:
+        collection.albums.add(song.album)
+    if song.artist:
+        collection.artists.add(song.artist)
     return redirect('user_collection_detail', collection.pk)
 
 @require_POST

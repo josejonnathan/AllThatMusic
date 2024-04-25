@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import UserCollectionDetailView, UserRegisterView, UserLoginView, UserLogoutView, add_album_to_collection, remove_album_from_collection, add_song_to_collection, remove_song_from_collection, add_artist_to_collection, remove_artist_from_collection
+from .views import UserCollectionDetailView, UserRegisterView, UserLoginView, UserLogoutView, add_album_to_collection, remove_album_from_collection, add_song_to_collection, remove_song_from_collection, add_artist_to_collection, remove_artist_from_collection, UserCollectionArtistView, UserCollectionAlbumView, UserCollectionSongView
 
 urlpatterns = [
     path('register/', UserRegisterView.as_view(), name='register'),
@@ -12,4 +12,7 @@ urlpatterns = [
     path('collection/remove/song/<int:song_id>/', remove_song_from_collection, name='remove_song_from_collection'),
     path('collection/add/artist/<int:artist_id>/', add_artist_to_collection, name='add_artist_to_collection'),
     path('collection/remove/artist/<int:artist_id>/', remove_artist_from_collection, name='remove_artist_from_collection'),
-]
+    path('collections/artist/', UserCollectionArtistView.as_view(), name='user_collection_artist_list'),
+    path('collections/album/', UserCollectionAlbumView.as_view(), name='user_collection_album_list'),
+    path('collections/song/', UserCollectionSongView.as_view(), name='user_collection_song_list'),
+    ]
