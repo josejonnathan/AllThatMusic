@@ -21,38 +21,11 @@
         /></a>
       </div>
       <div class="text-center">
-        <p>
+        <p></p>
           <strong class="text-warning">Artist: </strong
           ><a class="link-light text-decoration-none" href="{{ artist_detail_url }}">{{ album.artist }}</a>
         </p>
         <p><strong class="text-warning">Year:</strong> {{ album.year }}</p>
-        
-        <!-- Add / Remove from Collection: -->
-        {% if user.is_authenticated %}
-    <div class="text-center">
-        {% with user.usercollection_set.first as collection %}
-            {% if collection and album in collection.albums.all %}
-                <!-- Remove from collection Button -->
-                <form action="{% url 'remove_album_from_collection' album.id %}" method="POST">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-warning">
-                        Remove from My Collection
-                    </button>
-                </form>
-            {% else %}
-                <!-- Add to collection Button -->
-                <form action="{% url 'add_album_to_collection' album.id %}" method="POST">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-warning">
-                        Add to My Collection
-                    </button>
-                </form>
-            {% endif %}
-        {% endwith %}
-    </div>
-{% endif %}
-
-
       </div>
     </div>
 

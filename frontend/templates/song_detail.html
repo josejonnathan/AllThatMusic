@@ -1,87 +1,87 @@
-{% extends "base.html" %} {% load static %} {% block content %}
-<div class="cotainer py-4">
-  <div class="row">
-    <div class="col-2"></div>
-    <div class="col-4 text-center">
-      {% if song.lyrics %}
-      <h1 class="text-warning">{{ song.song }}</h1>
-      <p>{{ song.lyrics | linebreaks }}</p>
-      {% else %}
-      <h1>{{ song.song }}</h1>
-      <p>No Lyrics Available</p>
-      {% endif %}
-      <div>
-          <strong>Listen now on: </strong>
-          <a href="{{ song.deezer_link }}"
-            ><img
-              src="{% static 'Deezer_link.png' %}"
-              style="height: 5vh"
-              alt="Deezer"
-          /></a>
-          {% if song.youtube_link %}
-          <a href="{{ song.youtube_link }}"
-            ><img
-              src="{% static 'youtube_link.png' %}"
-              style="height: 5vh"
-              alt="Youtube"
-          /></a>
-          {% else %}
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="container py-4">
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-4 text-center">
+            {% if song.lyrics %}
+                <h1 class="text-warning">{{ song.song }}</h1>
+                <p>{{ song.lyrics | linebreaks }}</p>
+            {% else %}
+                <h1>{{ song.song }}</h1>
+                <p>No Lyrics Available</p>
+            {% endif %}
 
-          <p></p>
-          {% endif %}
-        </div>
-        <br>
-        <div>
-          <a href="{% url 'song_update' song.pk %}" class="btn btn-warning"
-              >Update Info</a
-            >
+            <div>
+              <a href="{% url 'song_update' song.pk %}" class="btn btn-warning">Update Info</a>
+          </div>
+
+            <div class="my-4">
+              <strong>Listen now on: </strong>
+              <a href="{{ song.deezer_link }}">
+                  <img src="{% static 'Deezer_link.png' %}" style="height: 5vh" alt="Deezer" />
+              </a>
+              {% if song.youtube_link %}
+                  <a href="{{ song.youtube_link }}">
+                      <img src "{% static 'youtube_link.png' %}" style="height: 5vh" alt="YouTube" />
+                  </a>
+              {% endif %}
+          </div>
           
-        </div>
-      </div>
-      <div class="col-4">
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 g-4">
-          <div class="card bg-warning me-3">
-            <a
-              class="link-light text-decoration-none"
-              href="{{ album_detail_url }}"
-              ><img
-                class="card-img-top"
-                src="{{ album_cover_url }}"
-                alt="{{ song.album }}"
-            /></a>
-            <div class="card-body">
-              <a
-                class="link-dark text-decoration-none"
-                href="{{ album_detail_url }}"
-              >
-                <h6 class="card-title">Album: {{ song.album }}</h6>
-              </a>
-            </div>
-          </div>
-          <div class="card bg-warning me-3">
-            <a
-              class="link-light text-decoration-none"
-              href="{{ artist_detail_url }}"
-              ><img
-                class="card-img-top"
-                src="{{ artist_photo_url }}"
-                alt="{{ song.artist }}"
-            /></a>
-            <div class="card-body">
-              <a
-                class="link-dark text-decoration-none"
-                href="{{ artist_detail_url }}"
-              >
-                <h6 class="card-title">Artist: {{ song.artist }}</h6>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
+          
+            
+            <!-- Section for Add/Remove from Collection buttons -->
+            {% if user.is_authenticated %}
+                <div class="text-center">
+                    {% with user.usercollection_set.first as collection %}
+                        {% if collection and song in collection.songs.all %}
+                            <!-- Remove from Collection -->
+                            <form action="{% url 'remove_song_from_collection' song.pk %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-warning">Remove from My Collection</button>
+                            </form>
+                        {% else %}
+                            <!-- Add to Collection -->
+                            <form action="{% url 'add_song_to_collection' song.pk %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-warning">Add to My Collection</button>
+                            </form>
+                        {% endif %}
+                    {% endwith %}
+                </div>
+            {% endif %}
 
-      <div class="col-2"></div>
+            
+        </div>
+        
+        <div class="col-4">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 g-4">
+                <div class="card bg-warning me-3">
+                    <a class="link-light text-decoration-none" href="{{ album_detail_url }}">
+                        <img class="card-img-top" src="{{ album_cover_url }}" alt="{{ song.album }}" />
+                    </a>
+                    <div class="card-body">
+                        <a class="link-dark text-decoration-none" href="{{ album_detail_url }}">
+                            <h6 class="card-title">Album: {{ song.album }}</h6>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="card bg-warning me-3">
+                    <a class="link-light text-decoration-none" href="{{ artist_detail_url }}">
+                        <img class="card-img-top" src="{{ artist_photo_url }}" alt="{{ song.artist }}" />
+                    </a>
+                    <div class="card-body">
+                        <a class="link-dark text-decoration-none" href="{{ artist_detail_url }}">
+                            <h6 class="card-title">Artist: {{ song.artist }}</h6>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-2"></div>
     </div>
-  </div>
-
-  {% endblock content %}
 </div>
+{% endblock %}

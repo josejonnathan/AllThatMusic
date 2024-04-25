@@ -1,9 +1,9 @@
 {% load static %}
 <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-warning">
   <div class="container">
-    <a class="navbar-brand" href="{% url 'home' %}"
-      ><img src="{% static 'ATM_logo.png' %}" alt=""
-    /></a>
+    <a class="navbar-brand" href="{% url 'home' %}">
+      <img src="{% static 'ATM_logo.png' %}" alt="Logo ATM" />
+    </a>
     <button
       class="navbar-toggler"
       type="button"
@@ -19,39 +19,63 @@
       <ul class="navbar-nav">
         <li class="nav-item p-2">
           <a
-            class="{% if request.path == '/home/' %}active{% endif %} link-dark text-decoration-none"
+            class="{% if request.path == '/' %}active{% endif %} link-dark text-decoration-none"
             href="{% url 'home' %}"
-            >Home</a
-          >
+          >Home</a>
         </li>
         <li class="nav-item p-2">
           <a
-            class="{% if request.path == '/artist-list/' %}active{% endif %} link-dark text-decoration-none"
+            class="{% if request.path == '/artist/' %}active{% endif %} link-dark text-decoration-none"
             href="{% url 'artist_list' %}"
-            >Artists</a
-          >
+          >Artists</a>
         </li>
         <li class="nav-item p-2">
           <a
-            class="{% if request.path == '/album-list/' %}active{% endif %} link-dark text-decoration-none"
+            class="{% if request.path == '/album/' %}active{% endif %} link-dark text-decoration-none"
             href="{% url 'album_list' %}"
-            >Albums</a
-          >
+          >Albums</a>
         </li>
         <li class="nav-item p-2">
           <a
-            class="{% if request.path == '/song-list/' %}active{% endif %} link-dark text-decoration-none"
+            class="{% if request.path == '/song/' %}active{% endif %} link-dark text-decoration-none"
             href="{% url 'song_list' %}"
-            >Songs</a
-          >
+          >Songs</a>
         </li>
         <li class="nav-item p-2">
           <a
             class="{% if request.path == '/create/' %}active{% endif %} link-dark text-decoration-none"
             href="{% url 'create_from_deezer' %}"
-            >Create</a
-          >
+          >Create</a>
         </li>
+      </ul>
+
+      <ul class="navbar-nav ms-auto" style="color: black;">
+        {% if user.is_authenticated %}
+          <!-- Cambios para usuario autenticado -->
+          <li class="nav-item p-2">
+            {% with user_collection=user.usercollection_set.first %}
+            <a class="link-dark text-decoration-none" href="{% url 'user_collection_detail' user_collection.id %}"><strong>{{ user.username }}'s Collection</strong></a>
+            {% endwith %}
+          </li>
+          
+          <li class="nav-item p-2">
+            <a class="link-dark text-decoration-none" href="{% url 'logout' %}">
+              Logout
+            </a>
+          </li>
+        {% else %}
+          <!-- Cambios para usuario no autenticado -->
+          <li class="nav-item p-2">
+            <a class="link-dark text-decoration-none" href="{% url 'login' %}">
+              Login
+            </a>
+          </li>
+          <li class="nav-item p-2">
+            <a class="link-dark text-decoration-none" href="{% url 'register' %}">
+              Sign Up
+            </a>
+          </li>
+        {% endif %}
       </ul>
     </div>
   </div>
