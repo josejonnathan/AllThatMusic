@@ -1,45 +1,47 @@
-{% extends "base.html" %} {% load static %} {% block content %}
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
 <div class="container py-4">
+  <h2 class="text-light text-center my-4">
+    {% with user_collection=user.usercollection_set.first %}
+  <a class="link-light text-decoration-none" href="{% url 'user_collection_detail' user_collection.id %}">{{ object.user.username }}'s Collection</a>
+  {% endwith %}
+     - Songs</h2>
   <div class="row">
-    <div class="col-9 p-2">
-      <table class="table table-dark">
+    <div class="col d-flex flex-wrap justify-content-center">
+      <table class="table table-dark w-auto">
         <thead>
-          <tr>
-            <th><h3 class="text-warning">Songs</h3></th>
+          <tr class="text-dark"> 
+            <th class="bg-warning text-dark">Title</th>
+            <th class="bg-warning text-dark">Album</th>
+            <th class="bg-warning text-dark">Artist</th>
           </tr>
         </thead>
         <tbody>
-          {% for song in songs %}
+          {% for song in object.songs.all %}
           <tr>
             <td>
               <a
                 class="link-light text-decoration-none"
                 href="{% url 'song_detail' song.pk %}"
               >
-                <p>{{ song.song }} - {{ song.artist }}</p>
+                <p>{{ song.song }}</p>
               </a>
             </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-    <div class="col-3">
-      <table class="table table-dark">
-        <thead>
-          <tr>
-            <th><h3 class="text-warning">Top Artist</h3></th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for artist in artists_with_most_songs %}
-          <tr>
             <td>
               <a
                 class="link-light text-decoration-none"
-                href="{% url 'artist_detail' artist.pk %}"
+                href="{% url 'album_detail' song.album.pk %}"
               >
-                <p>{{ artist.name }}</p>
+                <p>{{ song.album }}</p>
+              </a>
+            </td>
+            <td>
+              <a
+                class="link-light text-decoration-none"
+                href="{% url 'artist_detail' song.artist.pk %}"
+              >
+                <p>{{ song.artist }}</p>
               </a>
             </td>
           </tr>
@@ -48,23 +50,22 @@
       </table>
     </div>
   </div>
+
   <div class="d-flex justify-content-center">
     {% if is_paginated %}
     <div class="pagination">
       {% if page_obj.has_previous %}
-      <a href="?page=1" style="margin-right: 10px" class="link-warning"
-        >&laquo; First</a
-      >
+      <a href="?page=1" class="link-warning" style="margin-right: 10px;">&laquo; First</a>
       <a
         href="?page={{ page_obj.previous_page_number }}"
-        style="margin-right: 10px"
         class="link-warning"
+        style="margin-right: 10px;"
       >
-        Previous</a
-      >
+        Previous
+      </a>
       {% endif %}
 
-      <span class="current-page" style="margin-right: 10px">
+      <span class="current-page" style="margin-right: 10px;">
         Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
       </span>
 
@@ -72,21 +73,21 @@
       <a
         href="?page={{ page_obj.next_page_number }}"
         class="link-warning"
-        style="margin-right: 10px"
+        style="margin-right: 10px;"
       >
         Next
       </a>
       <a
         href="?page={{ page_obj.paginator.num_pages }}"
         class="link-warning"
-        style="margin-right: 10px"
+        style="margin-right: 10px;"
       >
-        Last &raquo;</a
-      >
+        Last &raquo;
+      </a>
       {% endif %}
     </div>
     {% endif %}
   </div>
 </div>
 
-{% endblock content %}
+{% endblock %}

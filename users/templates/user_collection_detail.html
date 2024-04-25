@@ -2,13 +2,23 @@
 
 {% block content %}
 <div class="container py-4">
-  <h2 class="text-warning text-center">{{ object.user.username }}'s Collection Overview</h2>
+  <h2 class="text-light text-center my-4">{{ object.user.username }}'s Collection Overview</h2>
+  <div class="d-flex justify-content-around">
+    <div><a href="{% url 'user_collection_artist_list' %}" class="link-light text-decoration-none"><strong class="text-warning">Artists:</strong> {{ object.artists.count }}</a>
+      </div>
+    <div><a href="{% url 'user_collection_album_list' %}" class="link-light text-decoration-none"><strong class="text-warning">Albums:</strong> {{ object.albums.count }}</a>
+      </div>
+    <div><a href="{% url 'user_collection_song_list' %}" class="link-light text-decoration-none"><strong class="text-warning">Songs:</strong> {{ object.songs.count }}</a>
+      </div>
+  </div>
+  
 
   <!-- Artists Section -->
-  <h3 class="text-center text-light">Artists</h3>
+  <h4 class="text-center text-light my-4">
+    <a class="link-light text-decoration-none" href="{% url 'user_collection_artist_list' %}">Your artists collection here</a></h4>
   <div class="row">
     <div class="col d-flex flex-wrap justify-content-center">
-      {% for artist in object.artists.all %}
+      {% for artist in object.artists.all|slice:":6" %}
       <div class="card bg-warning text-dark m-2" style="width: 12rem;">
         <a class="link-dark text-decoration-none" href="{% url 'artist_detail' artist.pk %}">
           <img src="{{ artist.photo_url }}" class="card-img-top p-2" alt="{{ artist.name }}">
@@ -24,10 +34,11 @@
   </div>
 
   <!-- Albums Section -->
-  <h3 class="text-center text-light">Albums</h3>
+  <h4 class="text-center text-light my-4">
+    <a class="link-light text-decoration-none" href="{% url 'user_collection_album_list' %}">Your albums collection here</a></h4>
   <div class="row">
     <div class="col d-flex flex-wrap justify-content-center">
-      {% for album in object.albums.all %}
+      {% for album in object.albums.all|slice:":6" %}
       <div class="card bg-warning text-dark m-2" style="width: 12rem;">
         <a class="link-dark text-decoration-none" href="{% url 'album_detail' album.pk %}">
           <img src="{{ album.cover_url }}" class="card-img-top p-2" alt="{{ album.title }}">
@@ -43,10 +54,11 @@
   </div>
   
   <!-- Songs Section -->
-  <h3 class="text-center text-light">Songs</h3>
+  <h4 class="text-center text-light my-4">
+    <a class="link-light text-decoration-none" href="{% url 'user_collection_song_list' %}">Your songs collection here</a></h4>
   <div class="row">
     <div class="col d-flex flex-wrap justify-content-center">
-      {% for song in object.songs.all %}
+      {% for song in object.songs.all|slice:":6" %}
       <div class="card bg-warning text-dark m-2" style="width: 12rem;">
         <a class="link-dark text-decoration-none" href="{% url 'song_detail' song.pk %}">
           <div class="card-body text-center">
@@ -59,6 +71,7 @@
       {% endfor %}
     </div>
   </div>
+  
   
   
 </div>
