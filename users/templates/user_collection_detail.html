@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-4">
+  <h2 class="text-warning text-center">{{ object.user.username }}'s Collection Overview</h2>
+
+  <!-- Artists Section -->
+  <h3 class="text-center text-light">Artists</h3>
+  <div class="row">
+    <div class="col d-flex flex-wrap justify-content-center">
+      {% for artist in object.artists.all %}
+      <div class="card bg-warning text-dark m-2" style="width: 12rem;">
+        <a class="link-dark text-decoration-none" href="{% url 'artist_detail' artist.pk %}">
+          <img src="{{ artist.photo_url }}" class="card-img-top p-2" alt="{{ artist.name }}">
+          <div class="card-body text-center">
+            <h6>{{ artist.name }}</h6>
+          </div>
+        </a>
+      </div>
+      {% empty %}
+      <p class="text-light">No artists found in the collection.</p>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Albums Section -->
+  <h3 class="text-center text-light">Albums</h3>
+  <div class="row">
+    <div class="col d-flex flex-wrap justify-content-center">
+      {% for album in object.albums.all %}
+      <div class="card bg-warning text-dark m-2" style="width: 12rem;">
+        <a class="link-dark text-decoration-none" href="{% url 'album_detail' album.pk %}">
+          <img src="{{ album.cover_url }}" class="card-img-top p-2" alt="{{ album.title }}">
+          <div class="card-body text-center">
+            <h6>{{ album.title }}</h6>
+          </div>
+        </a>
+      </div>
+      {% empty %}
+      <p class="text-light">No albums found in the collection.</p>
+      {% endfor %}
+    </div>
+  </div>
+  
+  <!-- Songs Section -->
+  <h3 class="text-center text-light">Songs</h3>
+  <div class="row">
+    <div class="col d-flex flex-wrap justify-content-center">
+      {% for song in object.songs.all %}
+      <div class="card bg-warning text-dark m-2" style="width: 12rem;">
+        <a class="link-dark text-decoration-none" href="{% url 'song_detail' song.pk %}">
+          <div class="card-body text-center">
+            <h6>{{ song.song }}</h6>
+          </div>
+        </a>
+      </div>
+      {% empty %}
+      <p class="text-light">No songs found in the collection.</p>
+      {% endfor %}
+    </div>
+  </div>
+  
+  
+</div>
+{% endblock %}
