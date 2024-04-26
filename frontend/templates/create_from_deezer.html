@@ -2,14 +2,15 @@
 <div class="container">
   <div class="d-flex justify-content-center">
     <div class="row justify-content-center">
-      <div class="col-8 ">
+      <div class="col-10 ">
         <div class="card bg-warning text-dark p-4 m-4">
           <img
-            src="https://cdn-assets-eu.frontify.com/s3/frontify-enterprise-files-eu/eyJwYXRoIjoiZGVlemVyXC9maWxlXC8zVDM3ZVFVOTZzZW1iTTZEQjZXNy5wbmcifQ:deezer:-256q9cZ__TTHp2xtHd4kKoE7MOVxWwSaIzf24seFxM?width={width}"
+            src="{% static 'deezer_lyrics.png' %}"
             class="card-img-top mb-3"
-            alt="Deezer Logo"
+            alt="Deezer / Lyrics.ovh Logo"
           />
-          <h5 class="text-center">Create Post from Deezer</h5>
+          <p class="text-center">Info will be retrieved from Deezer and Lyrics.ovh</p>
+          <h5 class="text-center">Album Creation</h5>
           {% if error_message %}
           <p>{{ error_message }}</p>
           {% else %}
@@ -17,7 +18,7 @@
             <form action="{% url 'create_from_deezer' %}" method="GET">
               <div class="text-center">
                 <label class="form-label mt-2" for="album_id"
-                  >Deezer Album ID:</label
+                  >Paste here the Deezer album ID:</label
                 >
               </div>
   

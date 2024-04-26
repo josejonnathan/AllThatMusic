@@ -19,11 +19,11 @@
 
             <div class="my-4">
               <strong>Listen now on: </strong>
-              <a href="{{ song.deezer_link }}">
+              <a href="{{ song.deezer_link }}" target="_blank" rel="noopener noreferrer">
                   <img src="{% static 'Deezer_link.png' %}" style="height: 5vh" alt="Deezer" />
               </a>
               {% if song.youtube_link %}
-                  <a href="{{ song.youtube_link }}">
+                  <a href="{{ song.youtube_link }}" target="_blank" rel="noopener noreferrer">
                       <img src "{% static 'youtube_link.png' %}" style="height: 5vh" alt="YouTube" />
                   </a>
               {% endif %}

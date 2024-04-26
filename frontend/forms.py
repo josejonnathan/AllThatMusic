@@ -31,3 +31,7 @@ class SongUpdateForm(forms.ModelForm):
             Field('lyrics', css_class='form-control mb-3'),
             Field('youtube_link', css_class='form-control bg-dark text-light mt-2'),
         )
+
+
+class SearchForm(forms.Form):
+    query = forms.CharField(label='Search', max_length=100)

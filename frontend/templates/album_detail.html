@@ -2,7 +2,7 @@
 <div class="container py-4">
   <div class="row">
     <div class="col-6">
-      <h1 class="text-center text-warning">{{ album.title }}</h1>
+      <h1 class="text-center text-light">{{ album.title }}</h1>
       <div class="text-center">
         <img
           class="img p-3"
@@ -13,7 +13,7 @@
       <div class="text-center">Listen now on: </div>
 
       <div class="d-flex justify-content-around p-3">
-        <a href="{{ album.deezer_album_link }}"
+        <a href="{{ album.deezer_album_link }}" target="_blank" rel="noopener noreferrer"
           ><img
             src="{% static 'Deezer_link.png' %}"
             style="height: 5vh"

@@ -16,7 +16,7 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
+      <ul class="navbar-nav me-auto">
         <li class="nav-item p-2">
           <a
             class="{% if request.path == '/' %}active{% endif %} link-dark text-decoration-none"
@@ -47,34 +47,46 @@
             href="{% url 'create_from_deezer' %}"
           >Create</a>
         </li>
+        
       </ul>
 
-      <ul class="navbar-nav ms-auto" style="color: black;">
+      <ul class="navbar-nav ms-auto align-items-center" style="color: black;">
+        <li class="nav-item p-2">
+          <form method="GET" action="{% url 'search_view' %}" class="d-flex align-items-center">
+            <input 
+              type="text" 
+              name="query" 
+              placeholder="Search" 
+              class="form-control form-control-sm w-75" 
+              style="margin-right: 5px;" 
+            />
+            <button type="submit" class="btn btn-sm btn-dark text-warning">Go</button>
+          </form>
+        </li>
         {% if user.is_authenticated %}
-          <!-- Cambios para usuario autenticado -->
-          <li class="nav-item p-2">
-            {% with user_collection=user.usercollection_set.first %}
-            <a class="link-dark text-decoration-none" href="{% url 'user_collection_detail' user_collection.id %}"><strong>{{ user.username }}'s Collection</strong></a>
-            {% endwith %}
-          </li>
-          
-          <li class="nav-item p-2">
-            <a class="link-dark text-decoration-none" href="{% url 'logout' %}">
-              Logout
-            </a>
-          </li>
+        <li class="nav-item p-2">
+          {% with user_collection=user.usercollection_set.first %}
+          <a class="link-dark text-decoration-none" href="{% url 'user_collection_detail' user_collection.id %}"><strong>{{ user.username }}'s Collection</strong></a>
+          {% endwith %}
+        </li>
+        
+        <li class="nav-item p-2">
+          <a class="link-dark text-decoration-none" href="{% url 'logout' %}">
+            Logout
+          </a>
+        </li>
         {% else %}
-          <!-- Cambios para usuario no autenticado -->
-          <li class="nav-item p-2">
-            <a class="link-dark text-decoration-none" href="{% url 'login' %}">
-              Login
-            </a>
-          </li>
-          <li class="nav-item p-2">
-            <a class="link-dark text-decoration-none" href="{% url 'register' %}">
-              Sign Up
-            </a>
-          </li>
+
+        <li class="nav-item p-2">
+          <a class="link-dark text-decoration-none" href="{% url 'login' %}">
+            Login
+          </a>
+        </li>
+        <li class="nav-item p-2">
+          <a class="link-dark text-decoration-none" href="{% url 'register' %}">
+            Sign Up
+          </a>
+        </li>
         {% endif %}
       </ul>
     </div>
