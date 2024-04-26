@@ -4,19 +4,19 @@
 <div class="container py-4">
     <div class="row">
         <div class="col-6">
-            <h1 class="text-center text-warning">{{ artist.name }}</h1>
+            <h1 class="text-center text-light">{{ artist.name }}</h1>
             <div class="text-center">
                 <img class="img p-3" src="{{ artist.photo_url }}" alt="{{ artist.name }} Photo" />
             </div>
 
             <div class="d-flex justify-content-around p-3">
                 <div class="text-center">Listen now on:</div>
-                <a href="{{ artist.deezer_link }}"><img src="{% static 'Deezer_link.png' %}" style="height: 5vh" alt="Deezer" /></a>
+                <a href="{{ artist.deezer_link }}" target="_blank" rel="noopener noreferrer"><img src="{% static 'Deezer_link.png' %}" style="height: 5vh" alt="Deezer" /></a>
                 {% if artist.youtube_link %}
-                    <a href="{{ artist.youtube_link }}"><img src="{% static 'youtube_link.png' %}" style="height: 5vh" alt="Youtube" /></a>
+                    <a href="{{ artist.youtube_link }}" target="_blank" rel="noopener noreferrer"><img src="{% static 'youtube_link.png' %}" style="height: 5vh" alt="Youtube" /></a>
                 {% endif %}
                 {% if artist.instagram_link %}
-                    <a href="{{ artist.instagram_link }}"><img src="{% static 'instagram_link.png' %}" style="height: 5vh" alt="Instagram" /></a>
+                    <a href="{{ artist.instagram_link }}" target="_blank" rel="noopener noreferrer"><img src="{% static 'instagram_link.png' %}" style="height: 5vh" alt="Instagram" /></a>
                 {% endif %}
             </div>
 

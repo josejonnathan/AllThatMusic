@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="container py-4">
+  <h2 class="text-light text-center my-4">That's what we found!</h2>
+
+  <div class="d-flex justify-content-around">
+    <div><a href="#artist" class="link-light text-decoration-none"><strong class="text-warning">Artists:</strong> {{ results.artists.count }}</a>
+      </div>
+    <div><a href="#albums" class="link-light text-decoration-none"><strong class="text-warning">Albums:</strong> {{ results.albums.count }}</a>
+      </div>
+    <div><a href="#songs" class="link-light text-decoration-none"><strong class="text-warning">Songs:</strong> {{ results.songs.count }}</a>
+      </div>
+  </div>
+  
+  <!-- Artists Section -->
+  <div id="artist"></div>
+  <h4 class="text-center text-light my-4">
+    <strong class="text-light">Artists:</strong>
+  </h4>
+  <div class="row justify-content-center">
+    {% for artist in results.artists %}
+      <div class="card bg-warning text-dark m-2" style="width: 10rem;">
+        <a class="link-dark text-decoration-none" href="{% url 'artist_detail' artist.pk %}">
+          <img src="{{ artist.photo_url }}" class="card-img-top p-1" alt="{{ artist.name }}">
+          <div class="card-body text-center">
+            <h6>{{ artist.name }}</h6>
+          </div>
+        </a>
+      </div>
+    {% empty %}
+    <p class="text-light text-center">No artists found.</p>
+    {% endfor %}
+  </div>
+  
+  <!-- Albums Section -->
+  <div id="albums"></div>
+  <h4 class="text-center text-light my-4">
+    <strong class="text-light">Albums:</strong>
+  </h4>
+  <div class="row justify-content-center">
+    {% for album in results.albums %}
+      <div class="card bg-warning text-dark m-2" style="width: 10rem;">
+        <a class="link-dark text-decoration-none" href="{% url 'album_detail' album.pk %}">
+          <img src="{{ album.cover_url }}" class="card-img-top p-1" alt="{{ album.title }}">
+          <div class="card-body text-center">
+            <h6>{{ album.title }}</h6>
+          </div>
+        </a>
+      </div>
+    {% empty %}
+    <p class="text-light text-center">No albums found.</p>
+    {% endfor %}
+  </div>
+  
+  <!-- Songs Section -->
+  <div id="songs"></div>
+  <h4 class="text-center text-light my-4">
+    <strong class="text-light">Songs:</strong>
+  </h4>
+  <div class="row">
+    <div class="col d-flex flex-wrap justify-content-center">
+      <table class="table table-dark w-auto">
+        <thead>
+          <tr class="text-dark"> 
+            <th class="bg-warning text-dark">Title</th>
+            <th class="bg-warning text-dark">Album</th>
+            <th class="bg-warning text-dark">Artist</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for song in results.songs %}
+          <tr>
+            <td>
+              <a
+                class="link-light text-decoration-none"
+                href="{% url 'song_detail' song.pk %}"
+              >
+                <p>{{ song.song }}</p>
+              </a>
+            </td>
+            <td>
+              <a
+                class="link-light text-decoration-none"
+                href="{% url 'album_detail' song.album.pk %}"
+              >
+                <p>{{ song.album }}</p>
+              </a>
+            </td>
+            <td>
+              <a
+                class="link-light text-decoration-none"
+                href="{% url 'artist_detail' song.artist.pk %}"
+              >
+                <p>{{ song.artist }}</p>
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+  
+
+</div>
+{% endblock %}

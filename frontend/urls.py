@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import HomePageView, DeezerRequestView, ArtistListView, ArtistDetailView, AlbumListView, AlbumDetailView, SongListView, SongDetailView, ArtistUpdateView, SongUpdateView
+from .views import HomePageView, DeezerRequestView, ArtistListView, ArtistDetailView, AlbumListView, AlbumDetailView, SongListView, SongDetailView, ArtistUpdateView, SongUpdateView, search_view
 
 urlpatterns = [
     path('', HomePageView.as_view(), name='home'),
@@ -14,4 +14,5 @@ urlpatterns = [
          ArtistUpdateView.as_view(), name='artist_update'),
     path('song/update/<int:pk>/',
          SongUpdateView.as_view(), name='song_update'),
+    path('search/', search_view, name='search_view'),
 ]

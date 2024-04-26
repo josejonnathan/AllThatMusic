@@ -1,11 +1,13 @@
 from django.core.paginator import Paginator
-from django.db.models import Count
+from django.shortcuts import render
+from django.db.models import Count,Q
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, TemplateView, DetailView
 from django.views.generic.edit import UpdateView
 from .utils.deezer_utils import fetch_album_info_from_deezer
 from .models import Artist, Album, Song
 from .utils.lyrics import get_lyrics
+from .forms import SearchForm
 
 
 class DeezerRequestView(TemplateView):
@@ -198,3 +200,19 @@ class SongUpdateView(UpdateView):
     
     def get_success_url(self):
         return reverse('song_detail', kwargs={'pk': self.object.pk})
+    
+
+def search_view(request):
+    form = SearchForm(request.GET)
+    results = []
+    
+    if form.is_valid():
+        query = form.cleaned_data['query']
+        
+        results = {
+            'songs': Song.objects.filter(Q(song__icontains=query)),
+            'albums': Album.objects.filter(Q(title__icontains=query)),
+            'artists': Artist.objects.filter(Q(name__icontains=query))
+        }
+    
+    return render(request, 'search_results.html', {'form': form, 'results': results})
