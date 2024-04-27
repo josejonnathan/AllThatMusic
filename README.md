@@ -3,6 +3,7 @@ Welcome to All That Music, a web application for music lovers who want to organi
 
 ## Project Description
 All That Music allows users to:
+v1.0 its already deployed on https://allthatmusic.pythonanywhere.com/
 
 - Create and manage artist profiles.
 - Explore and manage albums and songs.
