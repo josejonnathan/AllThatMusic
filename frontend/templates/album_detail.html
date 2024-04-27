@@ -1,7 +1,10 @@
-{% extends "base.html" %} {% load static %} {% block content %}
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
 <div class="container py-4">
   <div class="row">
-    <div class="col-6">
+    <!-- Columna para detalles del álbum -->
+    <div class="col-12 col-md-6"> 
       <h1 class="text-center text-light">{{ album.title }}</h1>
       <div class="text-center">
         <img
@@ -10,8 +13,8 @@
           alt="{{ album.title }} Photo"
         />
       </div>
+      
       <div class="text-center">Listen now on: </div>
-
       <div class="d-flex justify-content-around p-3">
         <a href="{{ album.deezer_album_link }}" target="_blank" rel="noopener noreferrer"
           ><img
@@ -20,45 +23,42 @@
             alt="Deezer"
         /></a>
       </div>
+      
       <div class="text-center">
         <p>
-          <strong class="text-warning">Artist: </strong
-          ><a class="link-light text-decoration-none" href="{{ artist_detail_url }}">{{ album.artist }}</a>
+          <strong class="text-warning">Artist:</strong>
+          <a class="link-light text-decoration-none" href="{{ artist_detail_url }}">{{ album.artist }}</a>
         </p>
         <p><strong class="text-warning">Year:</strong> {{ album.year }}</p>
         
-        <!-- Add / Remove from Collection: -->
+        <!-- Add/Remove from Collection -->
         {% if user.is_authenticated %}
-    <div class="text-center">
-        {% with user.usercollection_set.first as collection %}
-            {% if collection and album in collection.albums.all %}
-                <!-- Remove from collection Button -->
+          <div class="text-center">
+            {% with user.usercollection_set.first as collection %}
+              {% if collection and album in collection.albums.all %}
+                <!-- Remove from Collection -->
                 <form action="{% url 'remove_album_from_collection' album.id %}" method="POST">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-warning">
-                        Remove from My Collection
-                    </button>
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-warning">Remove from My Collection</button>
                 </form>
-            {% else %}
-                <!-- Add to collection Button -->
+              {% else %}
+                <!-- Add to Collection -->
                 <form action="{% url 'add_album_to_collection' album.id %}" method="POST">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-warning">
-                        Add to My Collection
-                    </button>
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-warning">Add to My Collection</button>
                 </form>
-            {% endif %}
-        {% endwith %}
-    </div>
-{% endif %}
-
-
+              {% endif %}
+            {% endwith %}
+          </div>
+        {% endif %}
       </div>
     </div>
 
-    <div class="col-1"></div>
-
-    <div class="col-4">
+    <!-- Columna de Espaciado -->
+    <div class="col-0 col-md-1 d-none d-md-block"></div>
+    
+    <!-- Columna para la lista de canciones -->
+    <div class="col-12 col-md-4"> 
       <div class="row">
         <div class="col">
           <table class="table table-dark">
@@ -86,5 +86,4 @@
     </div>
   </div>
 </div>
-
-{% endblock content %}
+{% endblock %}

@@ -3,7 +3,8 @@
 {% block content %}
 <div class="container py-4">
     <div class="row">
-        <div class="col-6">
+        <!-- Hacer que las columnas se coloquen una debajo de la otra en pantallas más pequeñas -->
+        <div class="col-12 col-md-6">
             <h1 class="text-center text-light">{{ artist.name }}</h1>
             <div class="text-center">
                 <img class="img p-3" src="{{ artist.photo_url }}" alt="{{ artist.name }} Photo" />
@@ -11,17 +12,24 @@
 
             <div class="d-flex justify-content-around p-3">
                 <div class="text-center">Listen now on:</div>
-                <a href="{{ artist.deezer_link }}" target="_blank" rel="noopener noreferrer"><img src="{% static 'Deezer_link.png' %}" style="height: 5vh" alt="Deezer" /></a>
+                <a href="{{ artist.deezer_link }}" target="_blank" rel="noopener noreferrer">
+                    <img src="{% static 'Deezer_link.png' %}" style="height: 5vh" alt="Deezer" />
+                </a>
                 {% if artist.youtube_link %}
-                    <a href="{{ artist.youtube_link }}" target="_blank" rel="noopener noreferrer"><img src="{% static 'youtube_link.png' %}" style="height: 5vh" alt="Youtube" /></a>
+                    <a href="{{ artist.youtube_link }}" target="_blank" rel="noopener noreferrer">
+                        <img src="{% static 'youtube_link.png' %}" style="height: 5vh" alt="Youtube" />
+                    </a>
                 {% endif %}
                 {% if artist.instagram_link %}
-                    <a href="{{ artist.instagram_link }}" target="_blank" rel="noopener noreferrer"><img src="{% static 'instagram_link.png' %}" style="height: 5vh" alt="Instagram" /></a>
+                    <a href="{{ artist.instagram_link }}" target="_blank" rel="noopener noreferrer">
+                        <img src="{% static 'instagram_link.png' %}" style="height: 5vh" alt="Instagram" />
+                    </a>
                 {% endif %}
             </div>
 
             <p class="p-3">{{ artist.review | linebreaks }}</p>
 
+            <!-- Botón para actualizar la información del artista -->
             <div class="text-center my-3">
               <a href="{% url 'artist_update' artist.pk %}" class="btn btn-warning">Artist Info Update</a>
           </div>
@@ -49,16 +57,17 @@
             
         </div>
 
-        <div class="col-1"></div>
-
-        <div class="col-4">
-            <h4 class="text-center text-warning">Albums</h4>
+        <!-- Asegurarse de que las columnas se coloquen una debajo de la otra en pantallas pequeñas -->
+        <div class="col-12 col-md-1 d-none d-md-block"></div> <!-- Columna de espaciado para pantallas grandes -->
+        
+        <div class="col-12 col-md-4"> <!-- Columna de albums -->
+            <h4 class="text-center text-light my-2">Albums</h4>
             <div class="row">
                 <div class="col">
-                    <div class="d-flex flex-wrap">
+                    <div class="d-flex flex-wrap justify-content-center">
                         {% for album in albums %}
                             <a href="{% url 'album_detail' album.pk %}">
-                                <img class="img p-1" src="{{ album.cover_url }}" alt="{{ album.title }}" style="height: 20vh" />
+                                <img class="img p-1" src="{{ album.cover_url }}" alt="{{ album.title }}" style="height: 8rem" />
                             </a>
                         {% empty %}
                             <h5>No albums found</h5>

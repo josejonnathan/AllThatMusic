@@ -3,8 +3,8 @@
 {% block content %}
 <div class="container py-4">
     <div class="row">
-        <div class="col-2"></div>
-        <div class="col-4 text-center">
+        <!-- Configuración responsiva para las columnas -->
+        <div class="col-12 col-md-4 order-md-2 text-center"> 
             {% if song.lyrics %}
                 <h1 class="text-warning">{{ song.song }}</h1>
                 <p>{{ song.lyrics | linebreaks }}</p>
@@ -28,21 +28,19 @@
                   </a>
               {% endif %}
           </div>
-          
-          
-            
-            <!-- Section for Add/Remove from Collection buttons -->
-            {% if user.is_authenticated %}
-                <div class="text-center">
+
+          <!-- Sección para agregar o eliminar de la colección -->
+          {% if user.is_authenticated %}
+                <div class="text-center my-2">
                     {% with user.usercollection_set.first as collection %}
                         {% if collection and song in collection.songs.all %}
-                            <!-- Remove from Collection -->
+                            <!-- Eliminar de la colección -->
                             <form action="{% url 'remove_song_from_collection' song.pk %}" method="POST">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-warning">Remove from My Collection</button>
                             </form>
                         {% else %}
-                            <!-- Add to Collection -->
+                            <!-- Agregar a la colección -->
                             <form action="{% url 'add_song_to_collection' song.pk %}" method="POST">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-warning">Add to My Collection</button>
@@ -50,12 +48,11 @@
                         {% endif %}
                     {% endwith %}
                 </div>
-            {% endif %}
-
-            
+          {% endif %}
         </div>
-        
-        <div class="col-4">
+
+        <!-- Columna para álbum y artista -->
+        <div class="col-12 col-md-6 order-md-1"> 
             <div class="row row-cols-1 row-cols-md-2 row-cols-lg-2 g-4">
                 <div class="card bg-warning me-3">
                     <a class="link-light text-decoration-none" href="{{ album_detail_url }}">
@@ -63,7 +60,7 @@
                     </a>
                     <div class="card-body">
                         <a class="link-dark text-decoration-none" href="{{ album_detail_url }}">
-                            <h6 class="card-title">Album: {{ song.album }}</h6>
+                            <h6>Album: {{ song.album }}</h6>
                         </a>
                     </div>
                 </div>
@@ -74,14 +71,15 @@
                     </a>
                     <div class="card-body">
                         <a class="link-dark text-decoration-none" href="{{ artist_detail_url }}">
-                            <h6 class="card-title">Artist: {{ song.artist }}</h6>
+                            <h6>Artist: {{ song.artist }}</h6>
                         </a>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <div class="col-2"></div>
+
+        <!-- Columna de espaciado -->
+        <div class="col-0 col-md-2 d-none d-md-block"></div>
     </div>
 </div>
 {% endblock %}
