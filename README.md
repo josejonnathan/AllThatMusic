@@ -3,7 +3,6 @@ Welcome to All That Music, a web application for music lovers who want to organi
 
 ## Project Description
 All That Music allows users to:
-v1.0 its already deployed on https://allthatmusic.pythonanywhere.com/
 
 - Create and manage artist profiles.
 - Explore and manage albums and songs.
@@ -39,6 +38,9 @@ To install and run the project locally, follow these steps:
 
 8. (Optional) if you want to populate the database with a sample data run the following line before run the server
 >python manage.py loaddata SampleDB.json
+>
+v1.0 its already deployed on https://allthatmusic.pythonanywhere.com/
+
 
 ## Contribution
 If you would like to contribute to the project, follow these steps:
