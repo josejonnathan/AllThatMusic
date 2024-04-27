@@ -9,7 +9,7 @@
      - Albums</h2>
       <div class="row">
         <div class="col d-flex flex-wrap justify-content-center">
-        {% for album in object.albums.all %}  <!-- Utiliza 'page_obj' en lugar de 'albums' -->
+        {% for album in object.albums.all %}  
         <div class="card bg-warning me-3 my-2" style="width: 12rem;">
           <a href="{% url 'album_detail' album.pk %}">
             <img

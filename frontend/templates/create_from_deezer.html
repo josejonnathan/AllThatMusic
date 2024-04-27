@@ -1,55 +1,90 @@
 {% extends "base.html" %}{% load static %} {% block content %}
 <div class="container">
-  <div class="d-flex justify-content-center">
-    <div class="row justify-content-center">
-      <div class="col-10 ">
-        <div class="card bg-warning text-dark p-4 m-4">
-          <img
-            src="{% static 'deezer_lyrics.png' %}"
-            class="card-img-top mb-3"
-            alt="Deezer / Lyrics.ovh Logo"
-          />
-          <p class="text-center">Info will be retrieved from Deezer and Lyrics.ovh</p>
-          <h5 class="text-center">Album Creation</h5>
-          {% if error_message %}
+  <div class="row justify-content-center my-4">  <!-- Cambiado a row -->
+
+    <!-- Album Creation Form -->
+    <div class="col-12 col-md-5 my-3">  <!-- Se apila en pantallas pequeñas -->
+      <div class="card bg-warning text-dark p-4">
+        <h4 class="text-center">Album Creation</h4>
+        <img
+          src="{% static 'deezer_lyrics.png' %}"
+          class="card-img-top mb-3"
+          alt="Deezer / Lyrics.ovh Logo"
+        />
+        <p class="text-center">Info will be retrieved from Deezer and Lyrics.ovh</p>
+        
+        {% if error_message %}
           <p>{{ error_message }}</p>
-          {% else %}
+        {% else %}
           <div class="mb-3">
             <form action="{% url 'create_from_deezer' %}" method="GET">
               <div class="text-center">
-                <label class="form-label mt-2" for="album_id"
-                  >Paste here the Deezer album ID:</label
-                >
+                <label class="form-label mt-2" for="album_id">Paste the Deezer album ID:</label>
               </div>
-  
               <input
-                class="form-control  text-dark mt-2"
+                class="form-control text-dark mt-2"
                 type="text"
                 id="album_id"
                 name="album_id"
                 required
               />
               <div class="text-center">
-                <button class="btn btn-dark mt-4" type="submit">
-                  Create Post
-                </button>
+                <button class="btn btn-dark mt-4" type="submit">Create</button>
               </div>
             </form>
-            {% if album %}
           </div>
+          {% if album %}
           <div class="text-center">
             <h5>Retrieved Album Information</h5>
             <p>Title: {{ album.title }}</p>
             <p>Artist: {{ album.artist }}</p>
             <p>Year: {{ album.year }}</p>
           </div>
-  
-          {% endif %} {% endif %}
-        </div>
+          {% endif %}
+        {% endif %}
       </div>
     </div>
-  </div>
 
+    <!-- Spacer for alignment on larger screens -->
+    <div class="col-12 col-md-1 d-none d-md-block"></div>  <!-- Columna separadora -->
+
+    <!-- How It Works Explanation -->
+    <div class="col-12 col-md-5 my-3">  <!-- Se apila en pantallas pequeñas -->
+      <div class="card bg-light p-4">
+        <h4 class="text-center text-dark">How it works</h4>
+        <ul class="list-unstyled text-dark">
+          <li>
+            Search for the album you want to create on the 
+            <a class="link-warning text-decoration-none" href="https://www.deezer.com/en/album/445663405" target="_blank">Deezer website</a>.
+          </li>
+          <div class="text-center">
+            <img class="my-2 shadow" src="{% static 'step1.jpg' %}" alt="Step 1" style="width: 90%; border-radius: 10px;">
+          </div>
+      
+          <li>
+            Copy the album ID from the browser's address bar.
+          </li>
+          <div class="text-center">
+            <img class="my-2 shadow" src="{% static 'step2.jpg' %}" alt="Step 2" style="width: 90%; border-radius: 10px;">
+          </div>
+      
+          <li>
+            Paste it into the Album Creation form, click on create, and wait a few seconds.
+          </li>
+          <div class="text-center">
+            <img class="my-2 shadow" src="{% static 'step3.jpg' %}" alt="Step 3" style="width: 90%; border-radius: 10px;">
+          </div>
+          <li>
+            You'll receive a confirmation when the album has been retrieved.
+          </li>
+          <div class="text-center">
+            <img class="my-2 shadow" src="{% static 'step4.jpg' %}" alt="Step 4" style="width: 90%; border-radius: 10px;">
+          </div>
+        </ul>
+      </div>
+    </div>
+
+  </div>
 </div>
 
 {% endblock content %}

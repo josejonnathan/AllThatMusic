@@ -74,6 +74,8 @@ def add_album_to_collection(request, album_id):
     collection.albums.add(album)
     if album.artist:
         collection.artists.add(album.artist)
+    for song in album.song_set.all():
+        collection.songs.add(song)
 
     return redirect('user_collection_detail', collection.pk)
 
@@ -82,6 +84,8 @@ def add_album_to_collection(request, album_id):
 def remove_album_from_collection(request, album_id):
     album = get_object_or_404(Album, id=album_id)
     collection = UserCollection.objects.get(user=request.user)
+    for song in album.song_set.all():
+        collection.songs.remove(song)
     collection.albums.remove(album)
 
     return redirect('user_collection_detail', collection.pk)

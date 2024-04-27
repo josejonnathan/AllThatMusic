@@ -26,7 +26,7 @@
       {% if user.is_authenticated %}
         Logged in as {{ user.username }} | <a class="text-light" href="{% url 'logout' %}">Logout</a>
       {% else %}
-        <a class="text-light" href="{% url 'login' %}">Login</a> | <a class="text-light" href="{% url 'register' %}">Signup</a>
+        <a class="text-light" href="{% url 'login' %}">Login</a> | <a class="text-light" href="{% url 'register' %}">Sign Up</a>
       {% endif %}
     </div>
 <!-- Footer -->
